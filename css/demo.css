@@ -283,10 +283,7 @@ a:focus {
 }
 
 .triggers {
-	border: 2px solid;
-	padding: 3em;
 	margin: 0 5vw;
-	width: 40vw;
 }
 
 /* Related demos */
@@ -345,8 +342,6 @@ a:focus {
 }
 
 .btn--trigger {
-	margin: 1em;
-	display: block;
 	white-space: nowrap;
 }
 
@@ -359,16 +354,32 @@ a:focus {
 	display: inline-block;
 	line-height: 1.7;
 }
-
+.btn2--trigger::before {
+	font-weight: bold;
+	border: 2px solid;
+	text-align: center;
+	text-indent: 0;
+	display: inline-block;
+	line-height: 1.7;
+}
 .btn--trigger::before {
-	content: 'Press';
+	content: 'Yes';
+	width: 4em;
+	height: 2em;
+	margin: 0 0.75em;
+}
+.btn2--trigger::before {
+	content: 'NO';
 	width: 4em;
 	height: 2em;
 	margin: 0 0.75em;
 }
 
 .btn--trigger:active::before {
-	content: 'Ouch!';
+	content: 'WOO!';
+}
+.btn2--trigger:active::before {
+	content: '';
 }
 
 .btn--default {
