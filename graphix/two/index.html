@@ -1,9 +1,14 @@
+
 <script src=lib2.js></script>
+<link rel="stylesheet" type="text/css" href="../css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../css/demo.css" />
+<link rel="stylesheet" type="text/css" href="../css/revealer.css" />
+<link rel="stylesheet" type="text/css" href="../css/pater.css" />
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Poppins:700" rel="stylesheet">
 
 <body bgcolor=black text=white link=white alink=white vlink=white>
 <center>
-<canvas id='canvas1' width=404 height=404></canvas>
-</center>
+  <canvas id='canvas1' width=404 height=404 style="height:900px"></canvas></center>
 </body>
 
 <script id='my_vertex_shader' type='x-shader/x-vertex'>
@@ -38,14 +43,21 @@
 
 
 <script id='my_title' type='text/html'>
-NEPTUNE
+  <header class="codrops-header">
+    <nav class="demos">
+      <h1 class="codrops-header__title">Neptune</h1>
+<br>
+      <a class="demo" href="">Home</a>
+      <a class="demo" href="">Blog</a>
+      <a class="demo" href="graphics.html">Graphics</a>
+      <a class="demo" href="">About</a>
+    </nav>
+  </header>
 </script>
 
 
 
 <script id='my_instructions' type='text/html'><font color=#b0b0b0>
-
-The atmosphere of Neptune is made of hydrogen and helium, with some methane. The methane absorbs red light, which makes the planet appear a lovely blue. High, thin clouds drift in the upper atmosphere.
 
 </script>
 
@@ -66,7 +78,8 @@ document.body.innerHTML = [''
    ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
    ,'<td valign=top>'
    ,'<textArea id=textArea spellcheck=false '
-   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 404px;width: 404px;"'
+   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 900px;width: 404px;"'
+
    ,'></textArea>'
    ,'</td><td valign=top>' + document.body.innerHTML + '</td>'
    ,'<td valign=top><font size=5>' + my_instructions.innerHTML + '</td>'

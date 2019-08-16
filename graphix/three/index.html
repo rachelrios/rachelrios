@@ -1,9 +1,15 @@
 <script src=lib2.js></script>
+<link rel="stylesheet" type="text/css" href="../css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../css/demo.css" />
+<link rel="stylesheet" type="text/css" href="../css/revealer.css" />
+<link rel="stylesheet" type="text/css" href="../css/pater.css" />
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Poppins:700" rel="stylesheet">
 
 <body bgcolor=black text=white link=white alink=white vlink=white>
 <center>
-<canvas id='canvas1' width=404 height=404></canvas>
+<canvas id='canvas1' width=404 height=404 style="height:900px"></canvas>
 </center>
+
 </body>
 
 <script id='my_vertex_shader' type='x-shader/x-vertex'>
@@ -17,84 +23,48 @@
 
 
 <script id='my_fragment_shader' type='x-shader/x-fragment'>
-uniform float uTime;
-varying vec3 vPos;
 
-vec4 sphere = vec4(0.2, 0.13, .01, .01);
+   uniform float uTime;
+   varying vec3 vPos;
 
-vec3 LDir[3], LColor[3];
+   void main() {
+      float c = 0.;
 
-vec3 skyColor = vec3(.2,.5,.5);
+      // BUILD A FRACTAL TEXTURE USING
+      // NOISE THAT ANIMATES THROUGH Z
 
-vec3 A = vec3(.4,.2,.2) ;
-vec3 D = vec3(.5,.2,.0) ;
-vec3 S = vec3(.5,.5,.5);
-float p = 7.5 ;
-
-vec3 R(vec3 L,vec3 N) { return 2.*dot(L,N)*N - L; }
-
-float ray_sphere(vec3 V,vec3 W,vec4 S) {
-   float r = S.w;
-   vec3 D = V - S.xyz ;
-   float A = dot(W,W) ;
-   float B = 2. * (dot(W, D));
-   float C = dot(D, D) - r*r;
-   float d = B*B-4.*A*C;
-   float xx = (-B + sqrt(d)) / 2.;
-   float yy = (-B - sqrt(d)) / 2.;
-  if (d > 0.0)
-     {
-         if (xx > 0.0 && yy > 0.0)
-         {
-            if (xx == yy) return xx;
-            float t = xx < yy ? xx : yy;
-            return t;
-        }
-}
-
-}
-
-
-void main() {
-   // ray origin
-   vec3 V = vec3(0.3, 0.3, 3.5);
-   vec3 W = normalize(vec3(vPos.x, vPos.y, - 3.5));
-
-   float t = ray_sphere(V, W, sphere);
-   vec3 color = skyColor ;
-   if (t >= 0.) {
-
-      LDir[0] = normalize(vec3(.2+.5*cos(1.*uTime),2.,0.));
-      LColor[0] = vec3(1.,1.,.9);
-
-      LDir[1] = normalize(vec3(-10.,-1.,-2.));
-      LColor[1] = vec3(.9,.1,.3);
-
-      vec3 P = V + t * W;
-      vec3 N = normalize(P - sphere.xyz) * uTime;
-
-      N += .2 * vec3(noise(100. * P * uTime),
-                     noise(0. * P + vec3(100.,0.,0.)),
-                     noise(0. * P + vec3(200.,0.,0.)));
-      N = normalize(N);
-
-      float texture = .9 * .9 * noise(20.0 * P);
-
-      color = A * A * texture * texture  ;
-
-      for (int i = 0 ; i < 3 ; i++) {
-         color += LColor[i] * D * max(0., dot(LDir[i], N)) * texture* texture  -.1;
-         color += LColor[i] * S * pow(max(0., dot(R(LDir[i],N), -W)), p);
+      float x = vPos.x;
+      float y = vPos.y;
+      for (int n = 1 ; n <= 5 ; n++) {
+         float z = float(n);
+         vec3 p = vec3(x, y, z + 0.3 * uTime);
+         float frequency = pow(2., z);
+         c += noise(frequency*p)/frequency;
       }
-   }
-   gl_FragColor = vec4(sqrt(color), .10);
+
+      vec3 sky   = vec3(.1, .3, .9);
+      vec3 white = vec3(1.,1.,1.);
+      vec3 pink  = vec3(1.,.1,.1);
+      vec3 cloud = mix(pink,white,c);
+      c = clamp(c + y, 0.0, 1.0);
+      vec3 color = mix(sky, cloud, c-cloud);
+      gl_FragColor = vec4(sqrt(color), 1.0);
 
  }</script>
 
 
 
 <script id='my_title' type='text/html'>
-Two Cells
+  <header class="codrops-header">
+    <nav class="demos">
+      <h1 class="codrops-header__title">Deep Blue Sea</h1>
+<br>
+      <a class="demo" href="">Menu</a>
+      <a class="demo" href="">Blog</a>
+      <a class="demo" href="graphics.html">Graphics</a>
+      <a class="demo" href="">About</a>
+    </nav>
+  </header>
 </script>
 
 
@@ -102,7 +72,6 @@ Two Cells
 <script id='my_instructions' type='text/html'><font color=#b0b0b0>
 
 
-White blood cells are an important component of the blood system, which is also made up of red blood cells, platelets, and plasma.
 </script>
 
 
@@ -122,7 +91,7 @@ document.body.innerHTML = [''
    ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
    ,'<td valign=top>'
    ,'<textArea id=textArea spellcheck=false '
-   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 404px;width: 404px;"'
+   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 900px;width: 404px;"'
    ,'></textArea>'
    ,'</td><td valign=top>' + document.body.innerHTML + '</td>'
    ,'<td valign=top><font size=5>' + my_instructions.innerHTML + '</td>'
