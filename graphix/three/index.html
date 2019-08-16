@@ -1,0 +1,152 @@
+<script src=lib2.js></script>
+
+<body bgcolor=black text=white link=white alink=white vlink=white>
+<center>
+<canvas id='canvas1' width=404 height=404></canvas>
+</center>
+</body>
+
+<script id='my_vertex_shader' type='x-shader/x-vertex'>
+   attribute vec3 aPos;
+   varying   vec3 vPos;
+   void main() {
+      gl_Position = vec4(aPos, 1.);
+      vPos = aPos;
+   }
+</script>
+
+
+<script id='my_fragment_shader' type='x-shader/x-fragment'>
+uniform float uTime;
+varying vec3 vPos;
+
+vec4 sphere = vec4(0.2, 0.13, .01, .01);
+
+vec3 LDir[3], LColor[3];
+
+vec3 skyColor = vec3(.2,.5,.5);
+
+vec3 A = vec3(.4,.2,.2) ;
+vec3 D = vec3(.5,.2,.0) ;
+vec3 S = vec3(.5,.5,.5);
+float p = 7.5 ;
+
+vec3 R(vec3 L,vec3 N) { return 2.*dot(L,N)*N - L; }
+
+float ray_sphere(vec3 V,vec3 W,vec4 S) {
+   float r = S.w;
+   vec3 D = V - S.xyz ;
+   float A = dot(W,W) ;
+   float B = 2. * (dot(W, D));
+   float C = dot(D, D) - r*r;
+   float d = B*B-4.*A*C;
+   float xx = (-B + sqrt(d)) / 2.;
+   float yy = (-B - sqrt(d)) / 2.;
+  if (d > 0.0)
+     {
+         if (xx > 0.0 && yy > 0.0)
+         {
+            if (xx == yy) return xx;
+            float t = xx < yy ? xx : yy;
+            return t;
+        }
+}
+
+}
+
+
+void main() {
+   // ray origin
+   vec3 V = vec3(0.3, 0.3, 3.5);
+   vec3 W = normalize(vec3(vPos.x, vPos.y, - 3.5));
+
+   float t = ray_sphere(V, W, sphere);
+   vec3 color = skyColor ;
+   if (t >= 0.) {
+
+      LDir[0] = normalize(vec3(.2+.5*cos(1.*uTime),2.,0.));
+      LColor[0] = vec3(1.,1.,.9);
+
+      LDir[1] = normalize(vec3(-10.,-1.,-2.));
+      LColor[1] = vec3(.9,.1,.3);
+
+      vec3 P = V + t * W;
+      vec3 N = normalize(P - sphere.xyz) * uTime;
+
+      N += .2 * vec3(noise(100. * P * uTime),
+                     noise(0. * P + vec3(100.,0.,0.)),
+                     noise(0. * P + vec3(200.,0.,0.)));
+      N = normalize(N);
+
+      float texture = .9 * .9 * noise(20.0 * P);
+
+      color = A * A * texture * texture  ;
+
+      for (int i = 0 ; i < 3 ; i++) {
+         color += LColor[i] * D * max(0., dot(LDir[i], N)) * texture* texture  -.1;
+         color += LColor[i] * S * pow(max(0., dot(R(LDir[i],N), -W)), p);
+      }
+   }
+   gl_FragColor = vec4(sqrt(color), .10);
+
+ }</script>
+
+
+
+<script id='my_title' type='text/html'>
+Two Cells
+</script>
+
+
+
+<script id='my_instructions' type='text/html'><font color=#b0b0b0>
+
+
+White blood cells are an important component of the blood system, which is also made up of red blood cells, platelets, and plasma.
+</script>
+
+
+
+<script>
+var vs = my_vertex_shader.innerHTML,
+    fs = my_fragment_shader.innerHTML;
+    fs = fs.substring(1, fs.length);
+
+document.body.innerHTML = [''
+   ,'<center><font size=6 color=#b0b0b0>' + my_title.innerHTML + '</center>'
+   ,'<TABLE cellspacing=0 cellpadding=0><TR>'
+   ,'<td width=50></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
+   ,'</TR><TR>'
+   ,'<table cellspacing=10>'
+   ,'<tr>'
+   ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
+   ,'<td valign=top>'
+   ,'<textArea id=textArea spellcheck=false '
+   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 404px;width: 404px;"'
+   ,'></textArea>'
+   ,'</td><td valign=top>' + document.body.innerHTML + '</td>'
+   ,'<td valign=top><font size=5>' + my_instructions.innerHTML + '</td>'
+   ,'</tr></table>'
+   ,'</TR></TABLE>'
+   ].join('');
+
+var i, text = fs.split('\n'), cols = 0;
+for (i = 0 ; i < text.length ; i++)
+   cols = Math.max(cols, text[i].length);
+
+textArea.rows = text.length;
+textArea.cols = cols;
+textArea.value = fs;
+textArea.style.backgroundColor = '#202020';
+textArea.style.color = 'white';
+textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
+
+var startTime = Date.now();
+
+function animate(gl) {
+   let time = (Date.now() - startTime) / 1000;
+   setUniform('1f', 'uTime', time);
+}
+
+gl_start(canvas1, vs, fs);
+</script>
