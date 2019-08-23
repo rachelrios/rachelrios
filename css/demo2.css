@@ -18,6 +18,8 @@
 }
 
 .content__subtitle {
+	margin-left: 250px;
+	margin-right: 250px;
 	font-size: 1.45rem;
 	padding: 1rem 0;
 	letter-spacing: 2px;
