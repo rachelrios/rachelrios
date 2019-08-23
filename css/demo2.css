@@ -58,27 +58,32 @@
 
 #content-1 {
 	background-image: url(../img/bg1.png);
+	background-color:black;}
 
 	/* background-image: url('https://images.unsplash.com/photo-1490131784822-b4626a8ec96a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80'); */
 }
 
 #content-2 {
-	background-image: url(../img/bg1.jpg);
+	text-align: center;
+	background-color: #fff;
 }
 
 #content-3 {
-	background-image: url(../img/bg2.jpg);
-}
+	text-align: center;
+	background-color:#a9bdd6;}
 
 #content-4 {
+	text-align: center;
+	background-color:#9ed4d4;
 }
 
 #content-5 {
-	background-image: url(../img/bg4.jpg);
-}
+	text-align: center;
+	background-color:#af9b9b;}
 
 #content-6 {
-	background-image: url(../img/bg5.jpg);
+	text-align: center;
+	background-color:#c57d76;
 }
 
 @media screen and (min-width: 55em) {
