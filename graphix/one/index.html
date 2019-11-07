@@ -1,144 +1,90 @@
-
 <script src=lib1.js></script>
-
 <link rel="stylesheet" type="text/css" href="../css/normalize.css" />
 <link rel="stylesheet" type="text/css" href="../css/demo.css" />
 <link rel="stylesheet" type="text/css" href="../css/revealer.css" />
 <link rel="stylesheet" type="text/css" href="../css/pater.css" />
 <link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Poppins:700" rel="stylesheet">
-
 <body bgcolor=black text=white link=white alink=white vlink=white>
-<center>
-<canvas id='canvas1' width=404 height=404 style="height:900px"></canvas></center>
-</body>
-
-
-<!!-------- VERTEX SHADER: YOU PROBABLY DON'T WANT TO CHANGE THIS RIGHT NOW -------->
-
-<script id='my_vertex_shader' type='x-shader/x-vertex'>
-   attribute vec3 aPos;
-   varying   vec3 vPos;
-   void main() {
+  <center>
+    <canvas id='canvas1' width=80% height=80% style="height:800px;"></canvas></center>
+  </body>
+  <script id='my_vertex_shader' type='x-shader/x-vertex'>
+    attribute vec3 aPos;
+    varying   vec3 vPos;
+    void main() {
       gl_Position = vec4(aPos, 1.);
       vPos = aPos;
-   }
-</script>
+    }
+  </script>
 
+  <script id='my_fragment_shader' type='x-shader/x-fragment'>
+    uniform float uTime; // TIME, IN SECONDS
+    varying vec3 vPos;   // POSITION WITHIN THE IMAGE
+    float disk(float x, float y, float r) {
+      return 1. - step(r * x, x * x - r * y);
+    }
+    void main() {
+      float red   = cos(241. * vPos.x) * .4;
+      float green = cos(241. * vPos.y) * .4;
+      float blue  = .532;
+      float c = 0.0;
+      for (int i = 0 ; i < 70 ; i++) {
+        float t = float(i);
+        float x = vPos.x + 1.2 * sin(.03 * uTime -  t);
+        float y = vPos.y + 1.4 * sin(.02 * uTime * t);
+        c += disk(x,y, 0.04);
+      }
+      vec3 color = vec3(c*blue,c*green*blue,c);
+      gl_FragColor = vec4(sqrt(color),.1);
+    }
+  </script>
 
-<!!-------- FRAGMENT SHADER: THIS IS WHERE YOU WILL DO YOUR WORK -------->
-
-<script id='my_fragment_shader' type='x-shader/x-fragment'>
-
-
-
-
-
-      uniform float uTime; // TIME, IN SECONDS
-        varying vec3 vPos;   // POSITION WITHIN THE IMAGE
-
-
-
-        float disk(float x, float y, float r) {
-           return 1. - step(r * x, x * x - r * y);
-        }
-
-        void main() {
-
-
-           float red   = cos(241. * vPos.x) * .4;
-           float green = cos(241. * vPos.y) * .4;
-           float blue  = .532;
-
-           float c = 0.0;
-           for (int i = 0 ; i < 70 ; i++) {
-              float t = float(i);
-              float x = vPos.x + 1.2 * sin(.03 * uTime -  t);
-              float y = vPos.y + 1.4 * sin(.02 * uTime * t);
-              c += disk(x,y, 0.04);
-           }
-
-           vec3 color = vec3(c*blue,c*green*blue,c);
-
-           gl_FragColor = vec4(sqrt(color),.1);
-        }
-
-
-
-
-
-
- </script>
-
-
-<!!-------- CREATE A PROPERLY DESCRIPTIVE TITLE BELOW -------->
-
-<script id='my_title' type='text/html'>
-  <header class="codrops-header">
-    <nav class="demos">
-      <h1 class="codrops-header__title">Rocks</h1>
-<br>
-      <a class="demo" href="">Home</a>
-      <a class="demo" href="">Blog</a>
-      <a class="demo" href="graphics.html">Graphics</a>
-      <a class="demo" href="">About</a>
-    </nav>
-  </header>
-</script>
-
-
-<!!-------- HERE IS WHERE YOU CAN PROVIDE A LONGER TEXT DESCRIPTION -------->
-
-<script id='my_instructions' type='text/html'><font color=#b0b0b0>
-Abstract drawing of rock erosion over time<br> <br>
-Did you know....? <br>
-Midway Atoll was formed < 30 million years ago, and at the time was probably a mountain 1000 meters tall or so.
-<br> As it formed quickly, the crust underneath sank, eroded , and it is now at sea level!
-
-
-</script>
-
-
-<!!-------- YOU PROBABLY DON'T WANT TO CHANGE ANYTHING BELOW FOR NOW -------->
-
-<script>
-var vs = my_vertex_shader.innerHTML,
+  <script id='my_title' type='text/html'>
+    <div class="">
+      <ul class="" style="text-align:left; padding-left:100px;" class='menu__link'>
+        <a href="../../index.html" style="text-align:left; padding-right:20px;">Home</a>
+        <a href="../../graphics.html" style="text-align:left; padding-right:20px;">Graphics</a>
+        <a onclick="openLink()" style="text-align:left; padding-right:20px;">LinkedIn</a>
+        <a onclick="openGit()" style="text-align:left; padding-right:20px;">GitHub</a>
+      </ul>
+    </div>
+  </script>
+  <script id='my_instructions' type='text/html'><font color=#b0b0b0>
+  </script>
+  <script>
+    var vs = my_vertex_shader.innerHTML,
     fs = my_fragment_shader.innerHTML;
     fs = fs.substring(1, fs.length);
-
-document.body.innerHTML = [''
-   ,'<center><font size=6 color=#b0b0b0>' + my_title.innerHTML + '</center>'
-   ,'<TABLE cellspacing=0 cellpadding=0><TR>'
-   ,'<td width=50></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
-   ,'</TR><TR>'
-   ,'<table cellspacing=40>'
-   ,'<tr>'
-   ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
-   ,'<td valign=top>'
-   ,'<textArea id=textArea spellcheck=false '
-   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 900px;width: 404px;"'
-   ,'></textArea>'
-   ,'</td><td valign=top>' + document.body.innerHTML + my_instructions.innerHTML +'</td>'
-   ,'</tr></table>'
-   ,'</TR></TABLE>'
-   ].join('');
-
-var i, text = fs.split('\n'), cols = 0;
-for (i = 0 ; i < text.length ; i++)
-   cols = Math.max(cols, text[i].length);
-
-textArea.rows = text.length;
-textArea.cols = cols;
-textArea.value = fs;
-textArea.style.backgroundColor = '#202020';
-textArea.style.color = 'white';
-textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
-
-var startTime = Date.now();
-
-function animate(gl) {
-   let time = (Date.now() - startTime) / 1000;
-   setUniform('1f', 'uTime', time);
-}
-
-gl_start(canvas1, vs, fs);
-</script>
+    document.body.innerHTML = [''
+    ,'<center><font size=6 color=#b0b0b0>' + my_title.innerHTML + '</center>'
+      ,'<TABLE cellspacing=0 cellpadding=0><TR>'
+        ,'<td width=50></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
+        ,'</TR><TR>'
+          ,'<table cellspacing=40>'
+            ,'<tr>'
+              ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
+              ,'<td valign=top>'
+                ,'<textArea id=textArea spellcheck=false '
+                ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 900px;width: 404px;"'
+                ,'></textArea>'
+                ,'</td><td valign=top>' + document.body.innerHTML + my_instructions.innerHTML +'</td>'
+                ,'</tr></table>'
+                ,'</TR></TABLE>'
+                ].join('');
+                var i, text = fs.split('\n'), cols = 0;
+                for (i = 0 ; i < text.length ; i++)
+                cols = Math.max(cols, text[i].length);
+                textArea.rows = text.length;
+                textArea.cols = cols;
+                textArea.value = fs;
+                textArea.style.backgroundColor = '#202020';
+                textArea.style.color = 'white';
+                textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
+                var startTime = Date.now();
+                function animate(gl) {
+                  let time = (Date.now() - startTime) / 1000;
+                  setUniform('1f', 'uTime', time);
+                }
+                gl_start(canvas1, vs, fs);
+              </script>
+              <script src="js/open.js"></script>

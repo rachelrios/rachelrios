@@ -1,0 +1,23 @@
+{
+  "name": "rachelrios.github.io",
+  "version": "1.0.0",
+  "description": "## Credits",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rachelrios/rachelrios.github.io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rachelrios/rachelrios.github.io/issues"
+  },
+  "homepage": "https://github.com/rachelrios/rachelrios.github.io#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0"
+  }
+}

@@ -254,6 +254,7 @@ a:focus {
 }
 
 .switch__item {
+	font-size: 24px;
 	line-height: 1;
 	position: relative;
 	display: inline-block;
