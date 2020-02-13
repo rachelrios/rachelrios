@@ -1394,7 +1394,7 @@ outline: none;
 
 	#header {
 		background-color: #444;
-		color: rgba(255, 255, 255, 0.75);
+		color: white;
 		display: -moz-flex;
 		display: -webkit-flex;
 		display: -ms-flex;
