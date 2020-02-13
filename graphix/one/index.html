@@ -21,22 +21,23 @@
     uniform float uTime; // TIME, IN SECONDS
     varying vec3 vPos;   // POSITION WITHIN THE IMAGE
     float disk(float x, float y, float r) {
-      return 1. - step(r * x, x * x - r * y);
+      return 1. - step(r / x, x / x + r / y);
     }
     void main() {
-      float red   = cos(241. * vPos.x) * .4;
-      float green = cos(241. * vPos.y) * .4;
-      float blue  = .532;
+      float red   = sin(241. * vPos.x) * .4;
+      float green = sin(241. * vPos.y) * .4;
+      float blue  = .32;
       float c = 0.0;
       for (int i = 0 ; i < 70 ; i++) {
         float t = float(i);
         float x = vPos.x + 1.2 * sin(.03 * uTime -  t);
-        float y = vPos.y + 1.4 * sin(.02 * uTime * t);
+        float y = vPos.y + 2.4 * sin(.02 * uTime * t);
         c += disk(x,y, 0.04);
       }
       vec3 color = vec3(c*blue,c*green*blue,c);
       gl_FragColor = vec4(sqrt(color),.1);
     }
+  
   </script>
 
   <script id='my_title' type='text/html'>
