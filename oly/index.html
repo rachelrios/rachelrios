@@ -12,7 +12,8 @@
 
 <section>
   <div class="title">
-    <h1> Tokyo 2021 - Python Analysis</h1>
+    <h1> Tokyo 2021 </h1>
+    <h1> Using Python Models </h1>
 
   </div>
 </section>
@@ -24,37 +25,12 @@
     <!-- Introduction -->
 <section>
   <div class="block">
-    <p><span class="first-character sc">H</span>
-      ow much meat is too much meat?
-      Some may say there is no such
-      thing while others say
-      that any consumption of meat is
-      too much.
-      While many may debate these opinions,
-      it is important to see the effect that the mass production of meat is
-      having on the environment and our health.
-      Meat is a great source of protein,
-      B12, and Iron [1],
-      however; in excess it can have detrimental effects on our society.
-      High cholesterol [2],
-      antibiotic resistance [4],
-      and greenhouse gases [5]
-      are just a few of the consequences
-      the livestock industry is having in
-      our planet.
-      If we don’t act now the
-      effects of it may be irreversible. [5]
+    <p><span class="first-character sc">A</span>
+      An event that originated in ancient Greece as many as 3000 years ago, the Olympics, have now taken the world by storm. Athletes endure countless hours of an intense physical training over the course of four years or more,  yet there seems to be trends among sports and countries. In this article we will try to predict the Tokyo Olympic winners based on historical Olympic data. We will be implementing two machine learning algorithms in Python using SK learn : KNN neighbors and decision trees, to determine the outcome for the following sports: tennis, swimming, and rhythmic gymnastics.
     </p></p>
     <p class="line-break margin-top-10"></p>
     <p class="margin-top-10">
-        In this analysis,
-        we will explore the environmental
-        consequences of the mass production
-        of animal farming and what we can
-        to create a more sustainable ecosystem.
-        By diving this analysis
-        into three parts: production,
-        consumption, and effects.
+TL;DR: In this analysis, we will attempt to predict the countries that will win the most medals in tennis, swimming, and rhythmic gymnastics using KNN neighbors and decision trees.
   </p>
   </div>
 </section>
@@ -62,43 +38,48 @@
     <!-- Meat Production -->
 <section>
   <div class="parallax-two">
-    <h2>Production </h2>
+    <h2>Data Set </h2>
   </div>
 </section>
 
 <section>
   <div class="block">
-    <p><span class="first-character ny">A</span>
-      nimal farming has been around since the
-      "Neolithic Revolution" around 10,000 years ago,
-      but may have begun much earlier [3].
-      Most of these farmers had a handful
-      of domesticated animals that they would
-      trade for goods or use for consumption.
-      The Industrial Revolution in the late
-      19th century introduced the concept
-      of factory farming forever changing
-      the way we eat [3].
+    <p center><span class="first-character ny">W</span>
+      e will be using the open-source data site “Kaggle” and use the data set for 120 years of Olympic history: athletes and results. This data set was constructed by author rgriffin using scrape and wrangle on the site  www.sports-reference.com in May 2018.  The file contains ~ 270K entries and 15 attributes. Each row corresponds to one athlete in one event. The attributes are as follows:
+    <br>1.	ID - Unique number for each athlete <br>
+      2.	Name - Athlete's name<br>
+      3.	Sex – Male or female<br>
+      4.	Age – - Athlete's age at time of competition<br>
+      5.	Height – Height of athlete in centimeters<br>
+      6.	Weight – Weight of athlete in kilograms<br>
+      7.	Team – Olympic Team name (Country)<br>
+      8.	NOC - National Olympic Committee 3-letter code<br>
+      9.	Games - Year and season in which the games took place<br>
+      10.	Year – Year in which the games took place<br>
+      11.	Season - Summer or Winter for the Olympics<br>
+      12.	City - Host city of Olympics<br>
+      13.	Sport – Sport athlete is competing in<br>
+      14.	Event – Event athlete is competing in<br>
+      15.	Medal - Gold, Silver, Bronze, or NA for each athlete<br>
+      For the analysis we will focus on Tennis, Swimming, and Gymnastics with the following rows: <br>
+      1.	Name <br>
+      2.	Age <br>
+      3.	Sex <br>
+      4.	Height <br>
+      5.	Weight <br>
+      6.	NOC <br>
+      7.	Games <br>
+
+
 </p>
 <!-- Meat chart world -->
-<h1> World Meat Production </h1>
-  <img src = ../images/meatP.gif class="center"> </img>
+<h1> Data Preparation </h1>
+
     <p class="margin-top-10">
-      Starting in the 1960’s we
-      see a spike in meat
-      production which is then followed by an
-      exorbitant growth in the 90's. [6]
-      If we look at the late 2000’s
-      we see that we globally we produce about
-      342 <bold> Million Tons </bold> of meat that is
-      754 <bold> billion lbs. </bold>
-      We see a 380% growth in production since 1963.[6]
-      The National Center for Biotechnology
-      Information expects the number
-      of farm animals produced each year
-      is estimated to double in 30 years [7].
-      (684 million tons / 1508 billion lbs.)
-      But where is this spike in production coming from?
+      To prepare the data we will: <br>
+-	Drop unnecessary fields and filter the data down to 3 sports <br>
+-	Drop athletes that did not win medals <br>
+-	We will drop winter Olympics since these sports only occur in the summer<br>
    </p>
    <!-- Continent chart world -->
    <h1> Continent Meat Production </h1>
@@ -134,7 +115,7 @@
 
 <!-- Meat Consumption -->
 <section>
-<div class="parallax-two">
+<div class="parallax-three">
 <h2>Consumption </h2>
 </div>
 </section>
@@ -187,7 +168,7 @@ The central limit theorem states that if you have a population with mean μ(MU) 
 
 <!-- Antibiotics and greenhouse -->
 <section>
-  <div class="parallax-three">
+  <div class="parallax-four">
     <h2>Antibiotics + Greenhouse Gasses</h2>
   </div>
 </section>
@@ -306,7 +287,7 @@ is a gas which has an effect on global warming 28 times higher than carbon dioxi
   </section>
 
   <section>
-    <div class="parallax-four">
+    <div class="parallax-five">
       <h2>What do we do next?</h2>
     </div>
   </section>
