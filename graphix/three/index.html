@@ -57,12 +57,9 @@
 <script id='my_title' type='text/html'>
   <header class="codrops-header">
     <nav class="demos">
-      <h1 class="codrops-header__title">Deep Blue Sea</h1>
-<br>
-      <a class="demo" href="">Menu</a>
-      <a class="demo" href="">Blog</a>
-      <a class="demo" href="graphics.html">Graphics</a>
-      <a class="demo" href="">About</a>
+      <a href="https://rachelrios.github.io/" style="text-align:left; padding-right:20px;">🔙</a>
+      <h1> Deep Blue Sea </h1>
+      <p> Ray tracing and noise-based procedural texture create the illusion of an ocean.</p>
     </nav>
   </header>
 </script>
@@ -106,7 +103,7 @@ for (i = 0 ; i < text.length ; i++)
 textArea.rows = text.length;
 textArea.cols = cols;
 textArea.value = fs;
-textArea.style.backgroundColor = '#202020';
+textArea.style.backgroundColor = '#000';
 textArea.style.color = 'white';
 textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
 

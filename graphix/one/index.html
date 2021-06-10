@@ -37,36 +37,43 @@
       vec3 color = vec3(c*blue,c*green*blue,c);
       gl_FragColor = vec4(sqrt(color),.1);
     }
-  
+
   </script>
 
+
   <script id='my_title' type='text/html'>
-    <div class="">
-      <ul class="" style="text-align:left; padding-left:100px;" class='menu__link'>
-        <a href="../../index.html" style="text-align:left; padding-right:20px;">Home</a>
-        <a href="../../graphics.html" style="text-align:left; padding-right:20px;">Graphics</a>
-        <a onclick="openLink()" style="text-align:left; padding-right:20px;">LinkedIn</a>
-        <a onclick="openGit()" style="text-align:left; padding-right:20px;">GitHub</a>
-      </ul>
-    </div>
+    <header class="codrops-header">
+      <nav class="demos">
+        <h1> Matrix Design </h1>
+        <p> Sin functions that integrate time to create a matrix of color. </p>
+        <a href="https://rachelrios.github.io/" style="text-align:left; padding-right:20px;">🔙</a>
+
+      </nav>
+    </header>
   </script>
+
+
   <script id='my_instructions' type='text/html'><font color=#b0b0b0>
   </script>
   <script>
+
+
+    var person = alert("WARNING: This graphic may potentially trigger seizures for people with photosensitive epilepsy. Viewer discretion is advised.");
+
     var vs = my_vertex_shader.innerHTML,
     fs = my_fragment_shader.innerHTML;
     fs = fs.substring(1, fs.length);
     document.body.innerHTML = [''
     ,'<center><font size=6 color=#b0b0b0>' + my_title.innerHTML + '</center>'
       ,'<TABLE cellspacing=0 cellpadding=0><TR>'
-        ,'<td width=50></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
+        ,'<td padding-left = 10px,width=150></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
         ,'</TR><TR>'
           ,'<table cellspacing=40>'
             ,'<tr>'
               ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
               ,'<td valign=top>'
                 ,'<textArea id=textArea spellcheck=false '
-                ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(32, 32, 32);color: white;height: 900px;width: 404px;"'
+                ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(0, 0, 0);color: white;height: 900px;width: 404px;"'
                 ,'></textArea>'
                 ,'</td><td valign=top>' + document.body.innerHTML + my_instructions.innerHTML +'</td>'
                 ,'</tr></table>'
@@ -78,7 +85,7 @@
                 textArea.rows = text.length;
                 textArea.cols = cols;
                 textArea.value = fs;
-                textArea.style.backgroundColor = '#202020';
+                textArea.style.backgroundColor = '#000';
                 textArea.style.color = 'white';
                 textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
                 var startTime = Date.now();
