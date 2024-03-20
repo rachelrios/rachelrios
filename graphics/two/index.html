@@ -1,0 +1,105 @@
+
+<script src=lib2.js></script>
+<link rel="stylesheet" type="text/css" href="../css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../css/demo.css" />
+<link rel="stylesheet" type="text/css" href="../css/revealer.css" />
+<link rel="stylesheet" type="text/css" href="../css/pater.css" />
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Poppins:700" rel="stylesheet">
+
+<body bgcolor=black text=white link=white alink=white vlink=white style="padding:100px">
+<center>
+  <canvas id='canvas1' width=404 height=404 style="height:900px"></canvas></center>
+</body>
+
+<script id='my_vertex_shader' type='x-shader/x-vertex'>
+   attribute vec3 aPos;
+   varying   vec3 vPos;
+   void main() {
+      gl_Position = vec4(aPos, 1.);
+      vPos = aPos;
+   }
+</script>
+
+
+
+<script id='my_fragment_shader' type='x-shader/x-fragment'>
+    uniform float uTime;
+    varying vec3 vPos;
+     void main() {
+
+        float x = vPos.x+ 0.1 * tan(.40 * uTime);           // HORIZONTAL VARYING
+        float y = vPos.y;        // VERTICAL VARYING
+        float s = x *x + y * y; // RADIALLY
+        float c = step(0.4, s);  // Size
+        vec3 p = vec3( c * uTime, s, vPos.y-1.0);
+      vec3 color =  vec3(0.001 , 0.0001, .002 + noise( p-s-1.4));
+        gl_FragColor = vec4(sqrt(color), s/c );
+
+
+
+ }</script>
+
+
+
+
+
+
+<script id='my_title' type='text/html'>
+  <a href="https://rachelrios.github.io/graphics.html" style="text-align:left; padding-right:20px;">🔙</a>
+  <p> Neptune </p>
+  <p> Sphere that uses time to create a ripple effect and animation </P>
+</script>
+
+
+<script id='my_instructions' type='text/html'><font color=#b0b0b0>
+
+</script>
+
+
+
+<script>
+var person = alert("NOTE: Flashing Lights.");
+
+var vs = my_vertex_shader.innerHTML,
+    fs = my_fragment_shader.innerHTML;
+    fs = fs.substring(1, fs.length);
+
+document.body.innerHTML = [''
+   ,'<center><font size=6 color=#b0b0b0>' + my_title.innerHTML + '</center>'
+   ,'<TABLE cellspacing=0 cellpadding=0><TR>'
+   ,'<td width=50></td><td><font color=red size=5><div id=errorMessage>&nbsp;</div></font></td>'
+   ,'</TR><TR>'
+   ,'<table cellspacing=10>'
+   ,'<tr>'
+   ,'<td valign=top><font size=2 color=red><div id=errorMarker>&nbsp;</div></font></td>'
+   ,'<td valign=top>'
+   ,'<textArea id=textArea spellcheck=false '
+   ,'style="font: 16px courier;outline-width: 0px;border-style: none;resize: none;overflow: scroll;background-color: rgb(0, 0, 0);color: white;height: 900px;width: 404px;"'
+
+   ,'></textArea>'
+   ,'</td><td valign=top>' + document.body.innerHTML + '</td>'
+   ,'<td valign=top><font size=5>' + my_instructions.innerHTML + '</td>'
+   ,'</tr></table>'
+   ,'</TR></TABLE>'
+   ].join('');
+
+var i, text = fs.split('\n'), cols = 0;
+for (i = 0 ; i < text.length ; i++)
+   cols = Math.max(cols, text[i].length);
+
+textArea.rows = text.length;
+textArea.cols = cols;
+textArea.value = fs;
+textArea.style.backgroundColor = '#000';
+textArea.style.color = 'white';
+textArea.onkeyup = function() { canvas1.setShaders(vs, this.value); }
+
+var startTime = Date.now();
+
+function animate(gl) {
+   let time = (Date.now() - startTime) / 1000;
+   setUniform('1f', 'uTime', time);
+}
+
+gl_start(canvas1, vs, fs);
+</script>
